@@ -705,6 +705,90 @@
           "orderMethod": "regular"
         }
       ]
+    },
+    {
+      "id": 39426,
+      "name": "תבשילים",
+      "dishes": [
+        {
+          "id": "9362963",
+          "rootId": "9362963",
+          "name": "שניצל",
+          "description": "שניצל בתוספת פחממה לבחירה וסלט אישי.\n<כשר רבנות מהדרין> 🌾 🥚 𓇢\nאלרגנים: 🌾🥚",
+          "price": 25,
+          "image": "images/9362963.jpg",
+          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1001/10016_0.jpg",
+          "category": "תבשילים",
+          "popularity": 3597,
+          "isPopular": true,
+          "orderMethod": "regular"
+        },
+        {
+          "id": "9362958",
+          "rootId": "9362958",
+          "name": "קציצות דג חריימה",
+          "description": "קציצות דג ברוטב חריימה, קוסקוס, סלט  אישי\n<כשר- בד\"צ העדה החרדית>",
+          "price": 35,
+          "image": "images/9362958.jpg",
+          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1001/10017_2.jpg",
+          "category": "תבשילים",
+          "popularity": 355,
+          "isPopular": false,
+          "orderMethod": "regular"
+        },
+        {
+          "id": "19345762",
+          "rootId": "19345762",
+          "name": "ספגטי בולונז",
+          "description": "פסטה ספגטי ברוטב בולונז בקר ועגבניות, סלט אישי 🌾🍬",
+          "price": 25,
+          "image": "images/19345762.jpg",
+          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1001/10023_5.jpg",
+          "category": "תבשילים",
+          "popularity": 1836,
+          "isPopular": false,
+          "orderMethod": "regular"
+        },
+        {
+          "id": "21415738",
+          "rootId": "21415738",
+          "name": "אושפלאו",
+          "description": "אושפלאו עם בשר בקר  מוגש עם סלט אישי",
+          "price": 40,
+          "image": "images/21415738.jpg",
+          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1001/10032_0.jpg",
+          "category": "תבשילים",
+          "popularity": 126,
+          "isPopular": false,
+          "orderMethod": "regular"
+        },
+        {
+          "id": "22861579",
+          "rootId": "22861579",
+          "name": "קוסקוס צמחוני",
+          "description": "קוסקוס עם מרק ירקות צמחוני.\nמוגש עם סלט אישי.",
+          "price": 25,
+          "image": "images/22861579.jpg",
+          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1001/10040_0.jpg",
+          "category": "תבשילים",
+          "popularity": 308,
+          "isPopular": false,
+          "orderMethod": "regular"
+        },
+        {
+          "id": "23974025",
+          "rootId": "23974025",
+          "name": "אמנון שלם",
+          "description": "דג אמנון שלם מוגש עם פירה וסלט אישי",
+          "price": 30,
+          "image": "images/23974025.jpg",
+          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1001/10096_0.jpg",
+          "category": "תבשילים",
+          "popularity": 0,
+          "isPopular": false,
+          "orderMethod": "regular"
+        }
+      ]
     }
   ]
 }
