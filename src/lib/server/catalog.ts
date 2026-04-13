@@ -1,23 +1,15 @@
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
 import type { CatalogDataset } from '$lib/types';
+import catalogData from '../../../data/restaurants.json';
 
-let cache: Set<string> | null = null;
+const dataset = catalogData as CatalogDataset;
 
-function load(): Set<string> {
-  if (cache) return cache;
-  const path = resolve(process.cwd(), 'data/restaurants.json');
-  const raw = readFileSync(path, 'utf-8');
-  const parsed = JSON.parse(raw) as CatalogDataset;
-  cache = new Set();
-  for (const r of parsed.restaurants) {
-    for (const d of r.dishes) {
-      cache.add(String(d.id));
-    }
+const dishIds = new Set<string>();
+for (const r of dataset.restaurants) {
+  for (const d of r.dishes) {
+    dishIds.add(String(d.id));
   }
-  return cache;
 }
 
 export function hasDish(dishId: string): boolean {
-  return load().has(dishId);
+  return dishIds.has(dishId);
 }
