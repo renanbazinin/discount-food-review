@@ -4,8 +4,8 @@
   import { loadCatalog, type LoadedCatalog } from '$lib/catalog/load';
   import { ratingsStore } from '$lib/stores/http-ratings-store';
   import type { Dish, MyRating, RatingAggregate } from '$lib/types';
-  import StarSelector from '$lib/ui/StarSelector.svelte';
   import RatingRow from '$lib/ui/RatingRow.svelte';
+  import RateSheet from '$lib/ui/RateSheet.svelte';
   import SurpriseCard from '$lib/ui/SurpriseCard.svelte';
   import { pickSurprise } from '$lib/stars/surprise';
 
@@ -19,6 +19,7 @@
   let surprise = $state<Dish | null>(null);
   let lastSurpriseId = $state<string | null>(null);
   let surpriseTriggerEl = $state<HTMLButtonElement | null>(null);
+  let mounted = $state(false);
 
   async function boot() {
     try {
@@ -67,35 +68,25 @@
     return { rated, unrated };
   });
 
-  const heroRow = $derived.by<{ row: Row; label: string } | null>(() => {
-    // User has rated something → show their top pick
-    if (mine.size > 0 && catalog) {
-      const myList = Array.from(mine.values()).sort((a, b) => {
-        if (a.stars !== b.stars) return b.stars - a.stars;
-        return b.timestamp - a.timestamp;
-      });
-      const top = myList[0];
-      const dish = catalog.getById(top.dishId);
-      if (dish) {
-        return {
-          row: {
-            dish,
-            agg: aggregates.get(dish.id) ?? null,
-            myStars: top.stars
-          },
-          label: 'המנה האהובה שלך'
-        };
-      }
-    }
-    // No user ratings but global leader exists → show it
-    if (rows.rated.length > 0) {
-      return { row: rows.rated[0], label: 'מה שכולם אוהבים הכי הרבה' };
-    }
-    return null;
-  });
+  const heroRow = $derived<Row | null>(rows.rated[0] ?? null);
 
   function toggle(dishId: string) {
     openId = openId === dishId ? null : dishId;
+  }
+
+  const sheetRow = $derived.by<Row | null>(() => {
+    if (!openId || !catalog) return null;
+    const dish = catalog.getById(openId);
+    if (!dish) return null;
+    return {
+      dish,
+      agg: aggregates.get(dish.id) ?? null,
+      myStars: mine.get(dish.id)?.stars ?? null
+    };
+  });
+
+  function closeSheet() {
+    openId = null;
   }
 
   async function onRate(dishId: string, stars: number) {
@@ -223,7 +214,10 @@
     queueMicrotask(() => surpriseTriggerEl?.focus());
   }
 
-  onMount(boot);
+  onMount(() => {
+    mounted = true;
+    boot();
+  });
 </script>
 
 <svelte:head>
@@ -282,59 +276,46 @@
     <div class="mb-5" in:fade>
       <button
         type="button"
-        onclick={() => toggle(heroRow.row.dish.id)}
+        onclick={() => toggle(heroRow.dish.id)}
         class="group relative block w-full overflow-hidden rounded-3xl bg-white/[0.04] text-start shadow-2xl shadow-black/40 ring-2 ring-accent/40 transition active:scale-[0.99]"
       >
         <div class="aspect-[4/3] w-full">
-          {#if heroRow.row.dish.image}
-            <img src={`/${heroRow.row.dish.image}`} alt="" class="h-full w-full object-cover" />
+          {#if heroRow.dish.image}
+            <img src={`/${heroRow.dish.image}`} alt="" class="h-full w-full object-cover" />
           {:else}
             <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-accent/80 to-rose-900 p-8">
               <span class="text-center text-4xl font-extrabold leading-tight text-white drop-shadow-lg">
-                {heroRow.row.dish.name}
+                {heroRow.dish.name}
               </span>
             </div>
           {/if}
         </div>
-        <div class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent p-5 pt-24">
-          <div class="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-accent">
-            <span>★</span>
-            <span>{heroRow.label}</span>
-          </div>
-          <div class="flex items-end justify-between gap-3">
-            <div class="min-w-0 flex-1">
-              <h2 class="truncate text-2xl font-extrabold leading-tight text-white">{heroRow.row.dish.name}</h2>
-              <p class="truncate text-sm text-white/75">
-                {heroRow.row.dish.restaurantName} · ₪{heroRow.row.dish.price}
-                {#if heroRow.row.agg && heroRow.row.agg.ratingCount > 0}
-                  · {heroRow.row.agg.averageStars.toFixed(1)} ({heroRow.row.agg.ratingCount})
-                {/if}
-              </p>
-            </div>
-            {#if heroRow.row.myStars != null}
-              <div class="shrink-0 rounded-2xl bg-accent px-4 py-2 text-xl font-extrabold text-ink">
-                {heroRow.row.myStars}
+        <div class="pointer-events-none absolute inset-x-0 bottom-0 p-4">
+          <div class="rounded-2xl bg-black/65 p-4 ring-1 ring-white/10 backdrop-blur-md">
+            <div class="flex items-end justify-between gap-3">
+              <div class="min-w-0 flex-1">
+                <div class="mb-1 text-2xl leading-none">🥇</div>
+                <h2 class="truncate text-2xl font-extrabold leading-tight text-white">{heroRow.dish.name}</h2>
+                <p class="truncate text-sm text-white/80">
+                  {heroRow.dish.restaurantName} · ₪{heroRow.dish.price}
+                  {#if heroRow.agg && heroRow.agg.ratingCount > 0}
+                    ·
+                    {#key heroRow.agg.averageStars}
+                      <span class={mounted ? 'shimmer-on-change inline-block' : 'inline-block'}>{heroRow.agg.averageStars.toFixed(1)}</span>
+                    {/key}
+                    ({heroRow.agg.ratingCount})
+                  {/if}
+                </p>
               </div>
-            {/if}
+              {#if heroRow.myStars != null}
+                <div class="shrink-0 rounded-2xl bg-accent px-4 py-2 text-xl font-extrabold text-ink">
+                  {heroRow.myStars}
+                </div>
+              {/if}
+            </div>
           </div>
         </div>
       </button>
-      {#if openId === heroRow.row.dish.id}
-        <div class="mt-3 space-y-3 rounded-2xl bg-white/[0.04] p-4 ring-1 ring-white/10" transition:slide={{ duration: 180 }}>
-          <StarSelector current={heroRow.row.myStars} onSelect={(s) => onRate(heroRow.row.dish.id, s)} />
-          {#if heroRow.row.myStars != null}
-            <div class="flex justify-center">
-              <button
-                type="button"
-                onclick={() => onClear(heroRow.row.dish.id)}
-                class="min-h-[44px] rounded-full bg-rose-900/50 px-4 py-2 text-xs font-semibold text-rose-100 transition hover:bg-rose-900/70"
-              >
-                נקה דירוג
-              </button>
-            </div>
-          {/if}
-        </div>
-      {/if}
     </div>
   {:else}
     <!-- nothing rated anywhere -->
@@ -359,35 +340,19 @@
   {/if}
 
   {#if !loading && catalog}
-    <!-- rated leaderboard -->
-    {#if rows.rated.length > 0}
+    <!-- rated leaderboard (hero is rank 1; list starts at rank 2) -->
+    {#if rows.rated.length > 1}
       <ol class="space-y-2.5">
-        {#each rows.rated as row, i (row.dish.id)}
+        {#each rows.rated.slice(1) as row, i (row.dish.id)}
           <li>
             <RatingRow
-              rank={i + 1}
+              rank={i + 2}
               dish={row.dish}
               averageStars={row.agg?.averageStars ?? 0}
               ratingCount={row.agg?.ratingCount ?? 0}
               myStars={row.myStars}
               onTap={() => toggle(row.dish.id)}
             />
-            {#if openId === row.dish.id}
-              <div class="mt-2 space-y-3 rounded-2xl bg-white/[0.04] p-4 ring-1 ring-white/10" transition:slide={{ duration: 180 }}>
-                <StarSelector current={row.myStars} onSelect={(s) => onRate(row.dish.id, s)} />
-                {#if row.myStars != null}
-                  <div class="flex justify-center">
-                    <button
-                      type="button"
-                      onclick={() => onClear(row.dish.id)}
-                      class="min-h-[44px] rounded-full bg-rose-900/50 px-4 py-2 text-xs font-semibold text-rose-100 transition hover:bg-rose-900/70"
-                    >
-                      נקה דירוג
-                    </button>
-                  </div>
-                {/if}
-              </div>
-            {/if}
           </li>
         {/each}
       </ol>
@@ -411,25 +376,19 @@
               muted
               onTap={() => toggle(row.dish.id)}
             />
-            {#if openId === row.dish.id}
-              <div class="mt-2 space-y-3 rounded-2xl bg-white/[0.04] p-4 ring-1 ring-white/10" transition:slide={{ duration: 180 }}>
-                <StarSelector current={row.myStars} onSelect={(s) => onRate(row.dish.id, s)} />
-                {#if row.myStars != null}
-                  <div class="flex justify-center">
-                    <button
-                      type="button"
-                      onclick={() => onClear(row.dish.id)}
-                      class="min-h-[44px] rounded-full bg-rose-900/50 px-4 py-2 text-xs font-semibold text-rose-100 transition hover:bg-rose-900/70"
-                    >
-                      נקה דירוג
-                    </button>
-                  </div>
-                {/if}
-              </div>
-            {/if}
           </li>
         {/each}
       </ol>
     {/if}
   {/if}
 </main>
+
+<RateSheet
+  dish={sheetRow?.dish ?? null}
+  agg={sheetRow?.agg ?? null}
+  myStars={sheetRow?.myStars ?? null}
+  busy={busy}
+  onRate={(s) => openId && onRate(openId, s)}
+  onClear={() => openId && onClear(openId)}
+  onClose={closeSheet}
+/>

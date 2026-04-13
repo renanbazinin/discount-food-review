@@ -18,6 +18,39 @@
   const skipped = new Set<string>();
   const undoStack: string[] = [];
 
+  let pointerStartX = 0;
+  let pointerStartY = 0;
+  let pointerStartTime = 0;
+  let pointerTracking = false;
+  let hintSwipeUndo = $state(false);
+
+  function onCardPointerDown(e: PointerEvent) {
+    const target = e.target as HTMLElement;
+    if (target.closest('[role="radio"]') || target.closest('button')) return;
+    pointerStartX = e.clientX;
+    pointerStartY = e.clientY;
+    pointerStartTime = performance.now();
+    pointerTracking = true;
+  }
+
+  function onCardPointerUp(e: PointerEvent) {
+    if (!pointerTracking) return;
+    pointerTracking = false;
+    const dx = e.clientX - pointerStartX;
+    const dy = e.clientY - pointerStartY;
+    const dt = performance.now() - pointerStartTime;
+    if (Math.abs(dx) >= 60 && dx > 0 && Math.abs(dy) < 30 && dt < 600) {
+      if (undoStack.length > 0) {
+        hintSwipeUndo = true;
+        undo();
+      }
+    }
+  }
+
+  function onCardPointerCancel() {
+    pointerTracking = false;
+  }
+
   async function boot() {
     try {
       const [cat, myRatings] = await Promise.all([loadCatalog(), ratingsStore.getMyRatings()]);
@@ -141,7 +174,14 @@
   {:else}
     {#key key}
       <section class="flex flex-1 min-h-0 flex-col gap-4" in:fade={{ duration: 220 }}>
-        <div class="relative flex-1 min-h-0 overflow-hidden rounded-3xl shadow-2xl shadow-black/40" in:fly={{ y: 20, duration: 260 }}>
+        <div
+          class="relative flex-1 min-h-0 overflow-hidden rounded-3xl shadow-2xl shadow-black/40 touch-pan-y"
+          in:fly={{ y: 20, duration: 260 }}
+          onpointerdown={onCardPointerDown}
+          onpointerup={onCardPointerUp}
+          onpointercancel={onCardPointerCancel}
+          role="presentation"
+        >
           {#if current.image}
             <img src={`/${current.image}`} alt="" class="h-full w-full object-cover" />
           {:else}
@@ -187,6 +227,9 @@
       >
         חזור אחורה
       </button>
+      {#if hintSwipeUndo}
+        <span class="text-xs text-white/40">או החלק ←</span>
+      {/if}
     </footer>
   {/if}
 </main>

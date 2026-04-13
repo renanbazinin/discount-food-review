@@ -42,4 +42,25 @@
       transform: translateX(100%);
     }
   }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .shimmer-on-change {
+      animation: shimmer-pop 450ms ease-out;
+      border-radius: 0.375rem;
+    }
+    @keyframes shimmer-pop {
+      0% {
+        background-color: rgba(255, 90, 60, 0);
+        color: inherit;
+      }
+      25% {
+        background-color: rgba(255, 90, 60, 0.6);
+        color: #0a1220;
+      }
+      100% {
+        background-color: rgba(255, 90, 60, 0);
+        color: inherit;
+      }
+    }
+  }
 }

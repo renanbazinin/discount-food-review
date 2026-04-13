@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import type { Dish } from '$lib/types';
 
   interface Props {
@@ -15,6 +16,11 @@
 
   const medal = $derived(rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : null);
   const avgFormatted = $derived(ratingCount > 0 ? averageStars.toFixed(1) : '—');
+
+  let mounted = $state(false);
+  onMount(() => {
+    mounted = true;
+  });
 </script>
 
 <button
@@ -46,7 +52,10 @@
     <div class="truncate text-xs text-white/55">{dish.restaurantName} · ₪{dish.price}</div>
     {#if ratingCount > 0}
       <div class="mt-0.5 truncate text-[11px] text-white/50">
-        {avgFormatted} <span class="opacity-60">(מתוך {ratingCount})</span>
+        {#key averageStars}
+          <span class={mounted ? 'shimmer-on-change inline-block' : 'inline-block'}>{avgFormatted}</span>
+        {/key}
+        <span class="opacity-60">(מתוך {ratingCount})</span>
       </div>
     {/if}
   </div>
