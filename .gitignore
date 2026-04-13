@@ -1,0 +1,19 @@
+# deps + build output
+node_modules
+.svelte-kit
+build
+.vercel
+
+# secrets — keep .env local only
+.env
+.env.*
+!.env.example
+
+# editor + OS
+.DS_Store
+.claude
+.vscode
+.idea
+
+# local scratch / notes
+.scratch
