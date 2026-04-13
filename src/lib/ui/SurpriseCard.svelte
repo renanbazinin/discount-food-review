@@ -2,6 +2,7 @@
   import { onMount, tick } from 'svelte';
   import { fade, scale } from 'svelte/transition';
   import type { Dish, RatingAggregate } from '$lib/types';
+  import { dishEmoji, dishGradient } from '$lib/catalog/fallback';
 
   interface Props {
     dish: Dish;
@@ -82,8 +83,13 @@
       {#if dish.image}
         <img src={`/${dish.image}`} alt="" class="h-full w-full object-cover" />
       {:else}
-        <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-accent/80 to-rose-900 p-6">
-          <span class="text-center text-3xl font-extrabold leading-tight text-white drop-shadow-lg">
+        {@const g = dishGradient(dish)}
+        <div
+          class="flex h-full w-full flex-col items-center justify-center gap-3 p-6"
+          style="background: linear-gradient(135deg, {g.from}, {g.to});"
+        >
+          <span class="text-6xl drop-shadow-lg" aria-hidden="true">{dishEmoji(dish)}</span>
+          <span class="text-center text-2xl font-extrabold leading-tight text-white drop-shadow-lg">
             {dish.name}
           </span>
         </div>

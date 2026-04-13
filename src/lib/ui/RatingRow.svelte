@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { Dish } from '$lib/types';
+  import { dishEmoji, dishGradient } from '$lib/catalog/fallback';
 
   interface Props {
     rank: number | null;
@@ -21,6 +22,9 @@
   onMount(() => {
     mounted = true;
   });
+
+  const grad = $derived(dishGradient(dish));
+  const emoji = $derived(dishEmoji(dish));
 </script>
 
 <button
@@ -43,8 +47,12 @@
   {#if dish.image}
     <img src={`/${dish.image}`} alt="" class="h-14 w-14 shrink-0 rounded-xl object-cover" />
   {:else}
-    <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-white/10 text-[10px] font-bold text-white/60">
-      {dish.name.slice(0, 6)}
+    <div
+      class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl text-2xl"
+      style="background: linear-gradient(135deg, {grad.from}, {grad.to});"
+      aria-hidden="true"
+    >
+      {emoji}
     </div>
   {/if}
   <div class="min-w-0 flex-1">

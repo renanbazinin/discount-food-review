@@ -8,6 +8,7 @@
   import RateSheet from '$lib/ui/RateSheet.svelte';
   import SurpriseCard from '$lib/ui/SurpriseCard.svelte';
   import { pickSurprise } from '$lib/stars/surprise';
+  import { dishEmoji, dishGradient } from '$lib/catalog/fallback';
 
   let catalog = $state<LoadedCatalog | null>(null);
   let aggregates = $state<Map<string, RatingAggregate>>(new Map());
@@ -283,8 +284,13 @@
           {#if heroRow.dish.image}
             <img src={`/${heroRow.dish.image}`} alt="" class="h-full w-full object-cover" />
           {:else}
-            <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-accent/80 to-rose-900 p-8">
-              <span class="text-center text-4xl font-extrabold leading-tight text-white drop-shadow-lg">
+            {@const g = dishGradient(heroRow.dish)}
+            <div
+              class="flex h-full w-full flex-col items-center justify-center gap-4 p-8"
+              style="background: linear-gradient(135deg, {g.from}, {g.to});"
+            >
+              <span class="text-7xl drop-shadow-lg" aria-hidden="true">{dishEmoji(heroRow.dish)}</span>
+              <span class="text-center text-3xl font-extrabold leading-tight text-white drop-shadow-lg">
                 {heroRow.dish.name}
               </span>
             </div>

@@ -6,6 +6,7 @@
   import { getNext } from '$lib/stars/queue';
   import type { Dish, MyRating } from '$lib/types';
   import StarSelector from '$lib/ui/StarSelector.svelte';
+  import { dishEmoji, dishGradient } from '$lib/catalog/fallback';
 
   let catalog = $state<LoadedCatalog | null>(null);
   let mine = $state<MyRating[]>([]);
@@ -39,7 +40,7 @@
     const dx = e.clientX - pointerStartX;
     const dy = e.clientY - pointerStartY;
     const dt = performance.now() - pointerStartTime;
-    if (Math.abs(dx) >= 60 && dx > 0 && Math.abs(dy) < 30 && dt < 600) {
+    if (Math.abs(dx) >= 60 && dx < 0 && Math.abs(dy) < 30 && dt < 600) {
       if (undoStack.length > 0) {
         hintSwipeUndo = true;
         undo();
@@ -185,7 +186,12 @@
           {#if current.image}
             <img src={`/${current.image}`} alt="" class="h-full w-full object-cover" />
           {:else}
-            <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-indigo-900 to-indigo-600 p-8">
+            {@const g = dishGradient(current)}
+            <div
+              class="flex h-full w-full flex-col items-center justify-center gap-4 p-8"
+              style="background: linear-gradient(135deg, {g.from}, {g.to});"
+            >
+              <span class="text-7xl drop-shadow-lg" aria-hidden="true">{dishEmoji(current)}</span>
               <span class="text-center text-3xl font-extrabold leading-tight text-white drop-shadow-lg">
                 {current.name}
               </span>
