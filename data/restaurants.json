@@ -115,20 +115,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23642966-t",
-          "rootId": "23642966",
-          "name": "לברק שום שחור ✡️  \"טלבנק\"",
-          "description": "פילה לברק צלוי משוח עם שום שחור, שתי תוספות לבחירתך וסלט צד\n| ללא גלוטן",
-          "price": 40,
-          "image": "images/23642966.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/isdiscountbank/1007/15200_0.jpg",
-          "category": "תפריט טלבנק בלבד !",
-          "popularity": 7,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23642966-r",
+          "id": "23642966",
           "rootId": "23642966",
           "name": "לברק שום שחור ✡️",
           "description": "פילה לברק צלוי משוח עם שום שחור, שתי תוספות לבחירתך וסלט צד\n| ללא גלוטן",
@@ -141,20 +128,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23642968-t",
-          "rootId": "23642968",
-          "name": "שניצל טונה ✡️  \"טלבנק\"",
-          "description": "נתח דג טונה בציפוי פנקו פריך, מוגש עם שתי תוספות לבחירתך וסלט צד\n| מכיל גלוטן, מכיל ביצים",
-          "price": 35,
-          "image": "images/23642968.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/isdiscountbank/1007/15202_0.jpg",
-          "category": "תפריט טלבנק בלבד !",
-          "popularity": 24,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23642968-r",
+          "id": "23642968",
           "rootId": "23642968",
           "name": "שניצל טונה ✡️",
           "description": "נתח דג טונה בציפוי פנקו פריך, מוגש עם שתי תוספות לבחירתך וסלט צד\n| מכיל גלוטן, מכיל ביצים",
@@ -167,20 +141,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23642969-t",
-          "rootId": "23642969",
-          "name": "סטייק טונה  ✡️  \"טלבנק\"",
-          "description": "נתח דג טונה צלוי על הפלאנצ'ה, מוגש עם שתי תוספות לבחירתך וסלט צד\n| ללא גלוטן",
-          "price": 35,
-          "image": "images/23642969.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/isdiscountbank/1007/15203_0.jpg",
-          "category": "תפריט טלבנק בלבד !",
-          "popularity": 35,
-          "isPopular": true,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23642969-r",
+          "id": "23642969",
           "rootId": "23642969",
           "name": "סטייק טונה ✡️",
           "description": "נתח דג טונה צלוי על הפלאנצ'ה, מוגש עם שתי תוספות לבחירתך וסלט צד\n| ללא גלוטן",
@@ -193,20 +154,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23642967-t",
-          "rootId": "23642967",
-          "name": "סלמון בריאות ללא גלוטן - 180 גר' ✡️  \"טלבנק\"",
-          "description": "פילה סלמון אפוי (180 ג'), מוגש עם שתי תוספות לבחירתך וסלט צד\n| ללא גלוטן",
-          "price": 50,
-          "image": "images/23642967.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/isdiscountbank/1007/15204_0.jpg",
-          "category": "תפריט טלבנק בלבד !",
-          "popularity": 20,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23642967-r",
+          "id": "23642967",
           "rootId": "23642967",
           "name": "סלמון בריאות ללא גלוטן - 180 גר' ✡️",
           "description": "פילה סלמון אפוי (180 ג'), מוגש עם שתי תוספות לבחירתך וסלט צד\n| ללא גלוטן",
@@ -219,20 +167,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23642970-t",
-          "rootId": "23642970",
-          "name": "טליאטלה עגבניות ללג ✡️   \"טלבנק\"",
-          "description": "פסטה ללא גלוטן ברוטב עגבניות קלאסי\n| ללא גלוטן",
-          "price": 25,
-          "image": "images/23642970.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/isdiscountbank/1007/15205_0.jpg",
-          "category": "תפריט טלבנק בלבד !",
-          "popularity": 7,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23642970-r",
+          "id": "23642970",
           "rootId": "23642970",
           "name": "טליאטלה עגבניות ללג ✡️",
           "description": "פסטה ללא גלוטן ברוטב עגבניות קלאסי\n| ללא גלוטן",
@@ -245,20 +180,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23642971-t",
-          "rootId": "23642971",
-          "name": "טליאטלה עגבניות✡️   \"טלבנק\"",
-          "description": "טליאטלה ברוטב עגבניות קלאסי\n| מכיל גלוטן, מכיל ביצים",
-          "price": 25,
-          "image": "images/23642971.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/isdiscountbank/1007/15206_0.jpg",
-          "category": "תפריט טלבנק בלבד !",
-          "popularity": 23,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23642971-r",
+          "id": "23642971",
           "rootId": "23642971",
           "name": "טליאטלה עגבניות✡️",
           "description": "טליאטלה ברוטב עגבניות קלאסי\n| מכיל גלוטן, מכיל ביצים",
@@ -271,20 +193,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23642977-t",
-          "rootId": "23642977",
-          "name": "אמנון קראמבל שום-טימין ✡️  \"טלבנק\"",
-          "description": "פילה אמנון צלוי בטאבון עם קראמבל שום-טימין, מוגש עם שתי תוספות לבחירה\n| מכיל גלוטן",
-          "price": 25,
-          "image": "images/23642977.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/isdiscountbank/1007/15207_0.jpg",
-          "category": "תפריט טלבנק בלבד !",
-          "popularity": 97,
-          "isPopular": true,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23642977-r",
+          "id": "23642977",
           "rootId": "23642977",
           "name": "אמנון קראמבל שום-טימין ✡️",
           "description": "פילה אמנון צלוי בטאבון עם קראמבל שום-טימין, מוגש עם שתי תוספות לבחירה\n| מכיל גלוטן",
@@ -297,20 +206,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23642976-t",
-          "rootId": "23642976",
-          "name": "פילה אמנון ללא גלוטן - 200 גרם  ✡️  \"טלבנק\"",
-          "description": "פילה אמנון צלוי בטאבון, מוגש עם שתי תוספות לבחירה\n| ללא גלוטן",
-          "price": 25,
-          "image": "images/23642976.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/isdiscountbank/1007/15208_0.jpg",
-          "category": "תפריט טלבנק בלבד !",
-          "popularity": 10,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23642976-r",
+          "id": "23642976",
           "rootId": "23642976",
           "name": "פילה אמנון ללא גלוטן - 200 גרם ✡️",
           "description": "פילה אמנון צלוי בטאבון, מוגש עם שתי תוספות לבחירה\n| ללא גלוטן",
@@ -323,20 +219,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23642972-t",
-          "rootId": "23642972",
-          "name": "פיצה ים תיכונית - גלילית ✡️  \"טלבנק\"",
-          "description": "בצק מחמצת, רוטב עגביות, עגבניות שרי קונפי, זיתי קלמטה, בזיליקום, מוצרלה, לאבנה, זעתר וזילוף שמן זית",
-          "price": 40,
-          "image": "images/23642972.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/isdiscountbank/1007/15209_0.jpg",
-          "category": "תפריט טלבנק בלבד !",
-          "popularity": 1,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23642972-r",
+          "id": "23642972",
           "rootId": "23642972",
           "name": "פיצה ים תיכונית - גלילית ✡️",
           "description": "בצק מחמצת, רוטב עגביות, עגבניות שרי קונפי, זיתי קלמטה, בזיליקום, מוצרלה, לאבנה, זעתר וזילוף שמן זית",
@@ -349,20 +232,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23642964-t",
-          "rootId": "23642964",
-          "name": "פיצה סתיו ✡️ \"טלבנק\"",
-          "description": "בצק מחמצת, רוטב עגבניות, דלעת צלויה, בצל סגול, פטה, מוצרלה, טימין, סילאן, גרעיני דלעת",
-          "price": 40,
-          "image": "images/23642964.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/isdiscountbank/1007/15210_0.jpg",
-          "category": "תפריט טלבנק בלבד !",
-          "popularity": 0,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23642964-r",
+          "id": "23642964",
           "rootId": "23642964",
           "name": "פיצה סתיו ✡️",
           "description": "בצק מחמצת, רוטב עגבניות, דלעת צלויה, בצל סגול, פטה, מוצרלה, טימין, סילאן, גרעיני דלעת",
@@ -375,20 +245,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23642975-t",
-          "rootId": "23642975",
-          "name": "פיצה מרגריטה ✡️  \"טלבנק\"",
-          "description": "פיצה מרגריטה על בצק מחמצת, רוטב עגבניות ביתי, מוצרלה\n| מכיל גלוטן, מכיל לקטוז",
-          "price": 25,
-          "image": "images/23642975.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/isdiscountbank/1007/15211_1.jpg",
-          "category": "תפריט טלבנק בלבד !",
-          "popularity": 20,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23642975-r",
+          "id": "23642975",
           "rootId": "23642975",
           "name": "פיצה מרגריטה ✡️",
           "description": "פיצה מרגריטה על בצק מחמצת, רוטב עגבניות ביתי, מוצרלה\n| מכיל גלוטן, מכיל לקטוז",
@@ -401,20 +258,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23642973-t",
-          "rootId": "23642973",
-          "name": "פיצה פונגי ✡️  \"טלבנק\"",
-          "description": "בצק מחמצת, קרם פרש, מוצרלה, פרמזן, פטריות מוקפצות (פורטבלו, שמפיניון, שיטאקי), שום קונפי, שמן כמהין, בייבי תרד",
-          "price": 40,
-          "image": "images/23642973.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/isdiscountbank/1007/15212_0.jpg",
-          "category": "תפריט טלבנק בלבד !",
-          "popularity": 0,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23642973-r",
+          "id": "23642973",
           "rootId": "23642973",
           "name": "פיצה פונגי ✡️",
           "description": "בצק מחמצת, קרם פרש, מוצרלה, פרמזן, פטריות מוקפצות (פורטבלו, שמפיניון, שיטאקי), שום קונפי, שמן כמהין, בייבי תרד",
@@ -427,20 +271,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23646434-t",
-          "rootId": "23646434",
-          "name": "טליאטלה שמנת סלמון ✡️ ,טלבנק\"",
-          "description": "סטה טליאטלה, רוטב שמנת, שאלוט, פרמזן ופלייקים של סלמון\n| מוגש עם סלט צד\n|| מכיל גלוטן, מכיל לקטוז, מכיל ביצים",
-          "price": 40,
-          "image": "images/23646434.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/isdiscountbank/1007/15214_0.jpg",
-          "category": "תפריט טלבנק בלבד !",
-          "popularity": 14,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23646434-r",
+          "id": "23646434",
           "rootId": "23646434",
           "name": "טליאטלה שמנת סלמון ✡️ ,",
           "description": "סטה טליאטלה, רוטב שמנת, שאלוט, פרמזן ופלייקים של סלמון\n| מוגש עם סלט צד\n|| מכיל גלוטן, מכיל לקטוז, מכיל ביצים",
@@ -453,20 +284,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23642974-t",
-          "rootId": "23642974",
-          "name": "פיצה טבעונית 🌱  \"טלבנק\"",
-          "description": "בצק מחמצת, רוטב עגבניות, פסטו וירקות אנטיפסטי\n|| מכיל גלוטן",
-          "price": 25,
-          "image": null,
-          "imageUrl": "",
-          "category": "תפריט טלבנק בלבד !",
-          "popularity": 0,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23642974-r",
+          "id": "23642974",
           "rootId": "23642974",
           "name": "פיצה טבעונית 🌱",
           "description": "בצק מחמצת, רוטב עגבניות, פסטו וירקות אנטיפסטי\n|| מכיל גלוטן",
@@ -479,20 +297,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23646436-t",
-          "rootId": "23646436",
-          "name": "סלט בהרכבה M - \"טלבנק\"",
-          "description": "",
-          "price": 30,
-          "image": null,
-          "imageUrl": "",
-          "category": "תפריט טלבנק בלבד !",
-          "popularity": 65,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23646436-r",
+          "id": "23646436",
           "rootId": "23646436",
           "name": "סלט בהרכבה M",
           "description": "",
@@ -505,20 +310,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23646435-t",
-          "rootId": "23646435",
-          "name": "סלט בהרכבה L - \" טלבנק\"",
-          "description": "",
-          "price": 33,
-          "image": null,
-          "imageUrl": "",
-          "category": "תפריט טלבנק בלבד !",
-          "popularity": 26,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23646435-r",
+          "id": "23646435",
           "rootId": "23646435",
           "name": "סלט בהרכבה L",
           "description": "",
@@ -660,20 +452,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23598754-t",
-          "rootId": "23598754",
-          "name": "קציצות דג  חריימה טלבנק",
-          "description": "קציצות דג חריימה עם קוסקוס, סלט אישי\n <כשר- בד\"צ העדה החרדית> 🌾",
-          "price": 35,
-          "image": "images/23598754.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1006/10103_2.jpg",
-          "category": "תפריט טלבנק בלבד",
-          "popularity": 5,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23598754-r",
+          "id": "23598754",
           "rootId": "23598754",
           "name": "קציצות דג חריימה",
           "description": "קציצות דג חריימה עם קוסקוס, סלט אישי\n <כשר- בד\"צ העדה החרדית> 🌾",
@@ -686,20 +465,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23598769-t",
-          "rootId": "23598769",
-          "name": "שניצל פירה טלבנק",
-          "description": "שניצל, פירה, סלט עגבניות דודו 𓇢 🌾",
-          "price": 25,
-          "image": "images/23598769.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1006/10117_0.jpg",
-          "category": "תפריט טלבנק בלבד",
-          "popularity": 104,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23598769-r",
+          "id": "23598769",
           "rootId": "23598769",
           "name": "שניצל פירה",
           "description": "שניצל, פירה, סלט עגבניות דודו 𓇢 🌾",
@@ -712,20 +478,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23598768-t",
-          "rootId": "23598768",
-          "name": "פסטה ספגטי בולונז טלבנק",
-          "description": "פסטה ספגטי בולונז בשר ברוטב עגבניות וסלט אישי 🌾 🍬",
-          "price": 25,
-          "image": "images/23598768.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1006/10123_5.jpg",
-          "category": "תפריט טלבנק בלבד",
-          "popularity": 96,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23598768-r",
+          "id": "23598768",
           "rootId": "23598768",
           "name": "פסטה ספגטי בולונז",
           "description": "פסטה ספגטי בולונז בשר ברוטב עגבניות וסלט אישי 🌾 🍬",
@@ -764,20 +517,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23648666-t",
-          "rootId": "23648666",
-          "name": "פילה לברק בפסטו טלבנק",
-          "description": "פילה לברק בפסטו, זיתים, עגבניות מיובשות ושום.\nמוגש עם פחמימה, ירקנית וסלט אישי.",
-          "price": 40,
-          "image": "images/23648666.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1006/10145_0.jpg",
-          "category": "תפריט טלבנק בלבד",
-          "popularity": 9,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23648666-r",
+          "id": "23648666",
           "rootId": "23648666",
           "name": "פילה לברק בפסטו",
           "description": "פילה לברק בפסטו, זיתים, עגבניות מיובשות ושום.\nמוגש עם פחמימה, ירקנית וסלט אישי.",
@@ -790,20 +530,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23648671-t",
-          "rootId": "23648671",
-          "name": "רוטיסרי (כרע) בברביקיו טלבנק",
-          "description": "רבע עוף ברוטב ברביקיו מוגש עם פחמימה, ירקנית וסלט אישי.",
-          "price": 35,
-          "image": "images/23648671.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1006/10146_0.jpg",
-          "category": "תפריט טלבנק בלבד",
-          "popularity": 19,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23648671-r",
+          "id": "23648671",
           "rootId": "23648671",
           "name": "רוטיסרי (כרע) בברביקיו",
           "description": "רבע עוף ברוטב ברביקיו מוגש עם פחמימה, ירקנית וסלט אישי.",
@@ -816,20 +543,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23648672-t",
-          "rootId": "23648672",
-          "name": "רוטיסרי (כרע כפול) בברביקיו טלבנק",
-          "description": "כרע כפול ברוטב ברביקיו מוגש עם פחמימה, ירקנית וסלט אישי.",
-          "price": 45,
-          "image": "images/23648672.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1006/10147_0.jpg",
-          "category": "תפריט טלבנק בלבד",
-          "popularity": 3,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23648672-r",
+          "id": "23648672",
           "rootId": "23648672",
           "name": "רוטיסרי (כרע כפול) בברביקיו",
           "description": "כרע כפול ברוטב ברביקיו מוגש עם פחמימה, ירקנית וסלט אישי.",
@@ -842,20 +556,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23648724-t",
-          "rootId": "23648724",
-          "name": "חזה עוף אורז טלבנק",
-          "description": "חזה עוף מוגש עם אורז וסלט אישי",
-          "price": 25,
-          "image": "images/23648724.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1006/10149_0.jpg",
-          "category": "תפריט טלבנק בלבד",
-          "popularity": 193,
-          "isPopular": true,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23648724-r",
+          "id": "23648724",
           "rootId": "23648724",
           "name": "חזה עוף אורז",
           "description": "חזה עוף מוגש עם אורז וסלט אישי",
@@ -868,20 +569,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23663526-t",
-          "rootId": "23663526",
-          "name": "טופו קוסמוי טבעוני טלבנק",
-          "description": "אטריות אורז עם טופו וירקות ברוטב טריאקי.",
-          "price": 35,
-          "image": "images/23663526.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1006/10159_0.jpg",
-          "category": "תפריט טלבנק בלבד",
-          "popularity": 3,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23663526-r",
+          "id": "23663526",
           "rootId": "23663526",
           "name": "טופו קוסמוי טבעוני",
           "description": "אטריות אורז עם טופו וירקות ברוטב טריאקי.",
@@ -894,20 +582,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23663528-t",
-          "rootId": "23663528",
-          "name": "פאד קפאו בקר טלבנק",
-          "description": "פאד קפאו בקר על מצע אור לבן מוגש עם ביצת עין.",
-          "price": 25,
-          "image": "images/23663528.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1006/10160_0.jpg",
-          "category": "תפריט טלבנק בלבד",
-          "popularity": 0,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23663528-r",
+          "id": "23663528",
           "rootId": "23663528",
           "name": "פאד קפאו בקר",
           "description": "פאד קפאו בקר על מצע אור לבן מוגש עם ביצת עין.",
@@ -920,20 +595,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23663527-t",
-          "rootId": "23663527",
-          "name": "מוקפץ עוף עם אורז טלבנק",
-          "description": "מוקפץ עוף עם אורז וירקות ברוטב טריאקי.",
-          "price": 30,
-          "image": "images/23663527.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1006/10161_0.jpg",
-          "category": "תפריט טלבנק בלבד",
-          "popularity": 22,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23663527-r",
+          "id": "23663527",
           "rootId": "23663527",
           "name": "מוקפץ עוף עם אורז",
           "description": "מוקפץ עוף עם אורז וירקות ברוטב טריאקי.",
@@ -946,20 +608,7 @@
           "orderMethod": "regular"
         },
         {
-          "id": "23669653-t",
-          "rootId": "23669653",
-          "name": "קבב קצבים טלבנק",
-          "description": "קבב בקר עם אורז וירקנית מוגש עם סלט אישי וטחינה.",
-          "price": 35,
-          "image": "images/23669653.jpg",
-          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1006/10162_0.jpg",
-          "category": "תפריט טלבנק בלבד",
-          "popularity": 7,
-          "isPopular": false,
-          "orderMethod": "telbank"
-        },
-        {
-          "id": "23669653-r",
+          "id": "23669653",
           "rootId": "23669653",
           "name": "קבב קצבים",
           "description": "קבב בקר עם אורז וירקנית מוגש עם סלט אישי וטחינה.",

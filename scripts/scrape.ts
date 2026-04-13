@@ -143,19 +143,12 @@ async function processRestaurant(cfg: ConfigEntry): Promise<OutRestaurant | null
         isPopular: !!dish.isPopularDish,
         orderMethod: 'regular'
       };
-      if (containsTelbank(dish.dishName)) {
-        dishes.push({ ...base, id: `${rootId}-t`, orderMethod: 'telbank' });
-        dishes.push({
-          ...base,
-          id: `${rootId}-r`,
-          name: cleanTelbankName(dish.dishName),
-          orderMethod: 'regular'
-        });
-        kept += 2;
-      } else {
-        dishes.push(base);
-        kept += 1;
-      }
+      // Drop any lingering telbank marker from the dish name.
+      const cleanName = containsTelbank(dish.dishName)
+        ? cleanTelbankName(dish.dishName)
+        : dish.dishName.trim();
+      dishes.push({ ...base, name: cleanName });
+      kept += 1;
     }
     report.push({
       tag: generic ? 'KEEP/filtered' : 'KEEP',
@@ -164,6 +157,21 @@ async function processRestaurant(cfg: ConfigEntry): Promise<OutRestaurant | null
       kept
     });
   }
+
+  // Within a restaurant, dedupe by normalized name: after stripping the טלבנק
+  // marker we end up with near-duplicate names that came from parallel
+  // categories (e.g. both Take-Away and phone-only variants of the same pizza).
+  // Keep the first occurrence (category iteration order).
+  const seenNames = new Set<string>();
+  const deduped: OutDish[] = [];
+  for (const d of dishes) {
+    const key = d.name.trim().toLowerCase();
+    if (seenNames.has(key)) continue;
+    seenNames.add(key);
+    deduped.push(d);
+  }
+  dishes.length = 0;
+  dishes.push(...deduped);
 
   console.log(`\n${cfg.id}  ${cfg.name}`);
   for (const r of report) {
