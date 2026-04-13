@@ -6,6 +6,8 @@
   import type { Dish, MyRating, RatingAggregate } from '$lib/types';
   import StarSelector from '$lib/ui/StarSelector.svelte';
   import RatingRow from '$lib/ui/RatingRow.svelte';
+  import SurpriseCard from '$lib/ui/SurpriseCard.svelte';
+  import { pickSurprise } from '$lib/stars/surprise';
 
   let catalog = $state<LoadedCatalog | null>(null);
   let aggregates = $state<Map<string, RatingAggregate>>(new Map());
@@ -14,6 +16,9 @@
   let error = $state<string | null>(null);
   let openId = $state<string | null>(null);
   let busy = $state(false);
+  let surprise = $state<Dish | null>(null);
+  let lastSurpriseId = $state<string | null>(null);
+  let surpriseTriggerEl = $state<HTMLButtonElement | null>(null);
 
   async function boot() {
     try {
@@ -191,6 +196,33 @@
     }
   }
 
+  const canSurprise = $derived.by(() => {
+    if (!catalog) return false;
+    return pickSurprise(catalog.allDishes(), aggregates) !== null;
+  });
+
+  function onSurpriseClick() {
+    if (!catalog) return;
+    const pick = pickSurprise(catalog.allDishes(), aggregates, { excludeId: lastSurpriseId });
+    if (!pick) return;
+    surprise = pick;
+    lastSurpriseId = pick.id;
+  }
+
+  function onSurpriseReroll() {
+    if (!catalog || !surprise) return;
+    const pick = pickSurprise(catalog.allDishes(), aggregates, { excludeId: surprise.id });
+    if (!pick) return;
+    surprise = pick;
+    lastSurpriseId = pick.id;
+  }
+
+  function onSurpriseClose() {
+    surprise = null;
+    // Restore focus to the trigger after the dialog unmounts.
+    queueMicrotask(() => surpriseTriggerEl?.focus());
+  }
+
   onMount(boot);
 </script>
 
@@ -199,12 +231,34 @@
 </svelte:head>
 
 <main class="px-4 pt-5">
-  <header class="mb-5 flex items-center justify-between">
+  <header class="mb-5 flex items-center justify-between gap-3">
     <h1 class="text-xl font-extrabold tracking-tight text-white">הדירוג של כולם</h1>
-    {#if mine.size > 0 && catalog}
-      <span class="font-mono text-xs text-white/50">{mine.size} / {catalog.allDishes().length}</span>
-    {/if}
+    <div class="flex items-center gap-2">
+      {#if canSurprise}
+        <button
+          bind:this={surpriseTriggerEl}
+          type="button"
+          onclick={onSurpriseClick}
+          class="min-h-[36px] rounded-full bg-accent/15 px-3 py-1.5 text-xs font-bold text-accent ring-1 ring-accent/40 transition hover:bg-accent/25 active:scale-95"
+        >
+          ✨ הפתע אותי
+        </button>
+      {/if}
+      {#if mine.size > 0 && catalog}
+        <span class="font-mono text-xs text-white/50">{mine.size} / {catalog.allDishes().length}</span>
+      {/if}
+    </div>
   </header>
+
+  {#if surprise && catalog}
+    <SurpriseCard
+      dish={surprise}
+      agg={aggregates.get(surprise.id) ?? null}
+      myStars={mine.get(surprise.id)?.stars ?? null}
+      onReroll={onSurpriseReroll}
+      onClose={onSurpriseClose}
+    />
+  {/if}
 
   {#if error}
     <div class="mb-4 rounded-2xl bg-rose-900/50 px-4 py-3 text-center text-sm text-rose-100" transition:slide>
