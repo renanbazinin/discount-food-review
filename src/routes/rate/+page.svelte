@@ -16,7 +16,8 @@
   let error = $state<string | null>(null);
 
   const skipped = new Set<string>();
-  const undoStack: string[] = [];
+  type HistoryEntry = { type: 'rate'; dishId: string } | { type: 'skip'; dishId: string };
+  let history = $state<HistoryEntry[]>([]);
 
   let pointerStartX = 0;
   let pointerStartY = 0;
@@ -24,14 +25,13 @@
   let dragging = $state(false);
   let dragX = $state(0);
   let snapping = $state(false);
-  let hintSwipeUndo = $state(false);
 
   const SWIPE_THRESHOLD = 80;
 
   function onCardPointerDown(e: PointerEvent) {
     const target = e.target as HTMLElement;
     if (target.closest('[role="radio"]') || target.closest('button')) return;
-    if (undoStack.length === 0) return;
+    if (history.length === 0) return;
     pointerStartX = e.clientX;
     pointerStartY = e.clientY;
     pointerTracking = true;
@@ -66,8 +66,7 @@
     try {
       (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
     } catch {}
-    if (wasDragging && dragX >= SWIPE_THRESHOLD && undoStack.length > 0) {
-      hintSwipeUndo = true;
+    if (wasDragging && dragX >= SWIPE_THRESHOLD && history.length > 0) {
       dragX = 0;
       undo();
     } else {
@@ -114,35 +113,46 @@
     const dishId = current.id;
     const entry: MyRating = { dishId, stars, timestamp: Date.now() };
     mine = [...mine, entry];
-    undoStack.push(dishId);
+    history = [...history, { type: 'rate', dishId }];
     skipped.delete(dishId);
     advance();
     ratingsStore.rate(dishId, stars).catch((e) => {
       error = e instanceof Error ? e.message : 'שמירה נכשלה';
       mine = mine.filter((r) => r.dishId !== dishId);
-      const idx = undoStack.lastIndexOf(dishId);
-      if (idx >= 0) undoStack.splice(idx, 1);
+      const idx = history.findLastIndex((h) => h.type === 'rate' && h.dishId === dishId);
+      if (idx >= 0) history = [...history.slice(0, idx), ...history.slice(idx + 1)];
     });
   }
 
   function skip() {
     if (!current) return;
-    skipped.add(current.id);
+    const dishId = current.id;
+    skipped.add(dishId);
+    history = [...history, { type: 'skip', dishId }];
     advance();
   }
 
   function undo() {
-    const dishId = undoStack.pop();
-    if (!dishId) return;
+    if (history.length === 0) return;
     error = null;
-    const prev = mine.find((r) => r.dishId === dishId);
-    mine = mine.filter((r) => r.dishId !== dishId);
-    const dish = catalog?.getById(dishId) ?? null;
+    const last = history[history.length - 1];
+    history = history.slice(0, -1);
+    const dish = catalog?.getById(last.dishId) ?? null;
+
+    if (last.type === 'skip') {
+      skipped.delete(last.dishId);
+      advance(dish);
+      return;
+    }
+
+    // rate: optimistic clear
+    const prev = mine.find((r) => r.dishId === last.dishId);
+    mine = mine.filter((r) => r.dishId !== last.dishId);
     advance(dish);
-    ratingsStore.clear(dishId).catch((e) => {
+    ratingsStore.clear(last.dishId).catch((e) => {
       error = e instanceof Error ? e.message : 'ביטול נכשל';
       if (prev) mine = [...mine, prev];
-      undoStack.push(dishId);
+      history = [...history, last];
     });
   }
 
@@ -263,14 +273,12 @@
       <button
         type="button"
         onclick={undo}
-        disabled={undoStack.length === 0}
+        disabled={history.length === 0}
         class="min-h-[44px] rounded-full bg-white/5 px-5 py-2 font-semibold text-white/70 transition hover:bg-white/10 disabled:opacity-30"
       >
         חזור אחורה
       </button>
-      {#if hintSwipeUndo}
-        <span class="text-xs text-white/40">או החלק ימינה →</span>
-      {/if}
+      <span class="text-xs text-white/40">או החלק ימינה →</span>
     </footer>
   {/if}
 </main>
