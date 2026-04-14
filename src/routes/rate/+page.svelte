@@ -53,8 +53,8 @@
       }
       dragging = true;
     }
-    // Rightward = back (requires history); leftward = skip.
-    if (dx > 0 && history.length === 0) {
+    // Leftward = back (requires history); rightward = skip.
+    if (dx < 0 && history.length === 0) {
       dragX = 0;
     } else {
       dragX = dx;
@@ -69,10 +69,10 @@
     try {
       (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
     } catch {}
-    if (wasDragging && dragX >= SWIPE_THRESHOLD && history.length > 0) {
+    if (wasDragging && dragX <= -SWIPE_THRESHOLD && history.length > 0) {
       dragX = 0;
       undo();
-    } else if (wasDragging && dragX <= -SWIPE_THRESHOLD && current) {
+    } else if (wasDragging && dragX >= SWIPE_THRESHOLD && current) {
       dragX = 0;
       skip();
     } else {
@@ -293,8 +293,8 @@
       </div>
       <div class="flex w-full justify-between px-4 text-xs text-white/40">
         
-        <span>→ חזור</span>
-        <span>← דלג</span>
+        <span>→חזור</span>
+        <span>דלג←</span>
       </div>
     </footer>
   {/if}
