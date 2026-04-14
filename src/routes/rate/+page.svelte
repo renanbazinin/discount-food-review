@@ -14,42 +14,79 @@
   let key = $state(0);
   let loading = $state(true);
   let error = $state<string | null>(null);
-  let busy = $state(false);
 
   const skipped = new Set<string>();
   const undoStack: string[] = [];
 
   let pointerStartX = 0;
   let pointerStartY = 0;
-  let pointerStartTime = 0;
   let pointerTracking = false;
+  let dragging = $state(false);
+  let dragX = $state(0);
+  let snapping = $state(false);
   let hintSwipeUndo = $state(false);
+
+  const SWIPE_THRESHOLD = 80;
 
   function onCardPointerDown(e: PointerEvent) {
     const target = e.target as HTMLElement;
     if (target.closest('[role="radio"]') || target.closest('button')) return;
+    if (undoStack.length === 0) return;
     pointerStartX = e.clientX;
     pointerStartY = e.clientY;
-    pointerStartTime = performance.now();
     pointerTracking = true;
+    dragging = false;
+    snapping = false;
+    try {
+      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    } catch {}
+  }
+
+  function onCardPointerMove(e: PointerEvent) {
+    if (!pointerTracking) return;
+    const dx = e.clientX - pointerStartX;
+    const dy = e.clientY - pointerStartY;
+    if (!dragging) {
+      if (Math.abs(dx) < 8) return;
+      if (Math.abs(dy) > Math.abs(dx)) {
+        pointerTracking = false;
+        return;
+      }
+      dragging = true;
+    }
+    // RTL back-gesture: only allow rightward drag
+    dragX = Math.max(0, dx);
   }
 
   function onCardPointerUp(e: PointerEvent) {
     if (!pointerTracking) return;
     pointerTracking = false;
-    const dx = e.clientX - pointerStartX;
-    const dy = e.clientY - pointerStartY;
-    const dt = performance.now() - pointerStartTime;
-    if (Math.abs(dx) >= 60 && dx < 0 && Math.abs(dy) < 30 && dt < 600) {
-      if (undoStack.length > 0) {
-        hintSwipeUndo = true;
-        undo();
-      }
+    const wasDragging = dragging;
+    dragging = false;
+    try {
+      (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+    } catch {}
+    if (wasDragging && dragX >= SWIPE_THRESHOLD && undoStack.length > 0) {
+      hintSwipeUndo = true;
+      dragX = 0;
+      undo();
+    } else {
+      snapping = true;
+      dragX = 0;
+      setTimeout(() => {
+        snapping = false;
+      }, 180);
     }
   }
 
   function onCardPointerCancel() {
     pointerTracking = false;
+    dragging = false;
+    snapping = true;
+    dragX = 0;
+    setTimeout(() => {
+      snapping = false;
+    }, 180);
   }
 
   async function boot() {
@@ -71,22 +108,21 @@
     key += 1;
   }
 
-  async function rate(stars: number) {
-    if (!current || busy) return;
-    busy = true;
+  function rate(stars: number) {
+    if (!current) return;
     error = null;
     const dishId = current.id;
-    try {
-      await ratingsStore.rate(dishId, stars);
-      mine = [...mine, { dishId, stars, timestamp: Date.now() }];
-      undoStack.push(dishId);
-      skipped.delete(dishId);
-      advance();
-    } catch (e) {
+    const entry: MyRating = { dishId, stars, timestamp: Date.now() };
+    mine = [...mine, entry];
+    undoStack.push(dishId);
+    skipped.delete(dishId);
+    advance();
+    ratingsStore.rate(dishId, stars).catch((e) => {
       error = e instanceof Error ? e.message : 'שמירה נכשלה';
-    } finally {
-      busy = false;
-    }
+      mine = mine.filter((r) => r.dishId !== dishId);
+      const idx = undoStack.lastIndexOf(dishId);
+      if (idx >= 0) undoStack.splice(idx, 1);
+    });
   }
 
   function skip() {
@@ -95,22 +131,19 @@
     advance();
   }
 
-  async function undo() {
+  function undo() {
     const dishId = undoStack.pop();
-    if (!dishId || busy) return;
-    busy = true;
+    if (!dishId) return;
     error = null;
-    try {
-      await ratingsStore.clear(dishId);
-      mine = mine.filter((r) => r.dishId !== dishId);
-      const dish = catalog?.getById(dishId) ?? null;
-      advance(dish);
-    } catch (e) {
+    const prev = mine.find((r) => r.dishId === dishId);
+    mine = mine.filter((r) => r.dishId !== dishId);
+    const dish = catalog?.getById(dishId) ?? null;
+    advance(dish);
+    ratingsStore.clear(dishId).catch((e) => {
       error = e instanceof Error ? e.message : 'ביטול נכשל';
+      if (prev) mine = [...mine, prev];
       undoStack.push(dishId);
-    } finally {
-      busy = false;
-    }
+    });
   }
 
   const progress = $derived.by(() => {
@@ -177,8 +210,10 @@
       <section class="flex flex-1 min-h-0 flex-col gap-4" in:fade={{ duration: 220 }}>
         <div
           class="relative flex-1 min-h-0 overflow-hidden rounded-3xl shadow-2xl shadow-black/40 touch-pan-y"
+          style="transform: translate3d({dragX}px, 0, 0); transition: {snapping ? 'transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1)' : 'none'}; will-change: transform;"
           in:fly={{ y: 20, duration: 260 }}
           onpointerdown={onCardPointerDown}
+          onpointermove={onCardPointerMove}
           onpointerup={onCardPointerUp}
           onpointercancel={onCardPointerCancel}
           role="presentation"
@@ -234,7 +269,7 @@
         חזור אחורה
       </button>
       {#if hintSwipeUndo}
-        <span class="text-xs text-white/40">או החלק ←</span>
+        <span class="text-xs text-white/40">או החלק ימינה →</span>
       {/if}
     </footer>
   {/if}
