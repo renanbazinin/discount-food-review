@@ -215,9 +215,33 @@
     queueMicrotask(() => surpriseTriggerEl?.focus());
   }
 
+  async function refreshLeaderboard() {
+    if (busy || document.hidden) return;
+    try {
+      const leaderboard = await ratingsStore.getLeaderboard();
+      const aggMap = new Map<string, RatingAggregate>();
+      for (const r of leaderboard) aggMap.set(r.dishId, r);
+      aggregates = aggMap;
+    } catch {}
+  }
+
   onMount(() => {
     mounted = true;
     boot();
+
+    const POLL_MS = 33_000;
+    const interval = window.setInterval(refreshLeaderboard, POLL_MS);
+    const onVisible = () => {
+      if (!document.hidden) refreshLeaderboard();
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    window.addEventListener('focus', onVisible);
+
+    return () => {
+      window.clearInterval(interval);
+      document.removeEventListener('visibilitychange', onVisible);
+      window.removeEventListener('focus', onVisible);
+    };
   });
 </script>
 
