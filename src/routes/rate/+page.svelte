@@ -31,7 +31,6 @@
   function onCardPointerDown(e: PointerEvent) {
     const target = e.target as HTMLElement;
     if (target.closest('[role="radio"]') || target.closest('button')) return;
-    if (history.length === 0) return;
     pointerStartX = e.clientX;
     pointerStartY = e.clientY;
     pointerTracking = true;
@@ -54,8 +53,12 @@
       }
       dragging = true;
     }
-    // RTL back-gesture: only allow rightward drag
-    dragX = Math.max(0, dx);
+    // Rightward = back (requires history); leftward = skip.
+    if (dx > 0 && history.length === 0) {
+      dragX = 0;
+    } else {
+      dragX = dx;
+    }
   }
 
   function onCardPointerUp(e: PointerEvent) {
@@ -69,6 +72,9 @@
     if (wasDragging && dragX >= SWIPE_THRESHOLD && history.length > 0) {
       dragX = 0;
       undo();
+    } else if (wasDragging && dragX <= -SWIPE_THRESHOLD && current) {
+      dragX = 0;
+      skip();
     } else {
       snapping = true;
       dragX = 0;
@@ -219,8 +225,8 @@
     {#key key}
       <section class="flex flex-1 min-h-0 flex-col gap-4" in:fade={{ duration: 220 }}>
         <div
-          class="relative flex-1 min-h-0 overflow-hidden rounded-3xl shadow-2xl shadow-black/40 touch-pan-y"
-          style="transform: translate3d({dragX}px, 0, 0); transition: {snapping ? 'transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1)' : 'none'}; will-change: transform;"
+          class="relative flex-1 min-h-0 select-none overflow-hidden rounded-3xl shadow-2xl shadow-black/40"
+          style="transform: translate3d({dragX}px, 0, 0); transition: {snapping ? 'transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1)' : 'none'}; will-change: transform; touch-action: pan-y; -webkit-user-select: none; -webkit-user-drag: none;"
           in:fly={{ y: 20, duration: 260 }}
           onpointerdown={onCardPointerDown}
           onpointermove={onCardPointerMove}
@@ -229,7 +235,12 @@
           role="presentation"
         >
           {#if current.image}
-            <img src={`/${current.image}`} alt="" class="h-full w-full object-cover" />
+            <img
+              src={`/${current.image}`}
+              alt=""
+              draggable="false"
+              class="pointer-events-none h-full w-full select-none object-cover"
+            />
           {:else}
             {@const g = dishGradient(current)}
             <div
@@ -262,23 +273,29 @@
       </section>
     {/key}
 
-    <footer class="mt-4 flex items-center justify-center gap-3 text-sm">
-      <button
-        type="button"
-        onclick={skip}
-        class="min-h-[44px] rounded-full bg-white/10 px-5 py-2 font-semibold text-cream transition hover:bg-white/15"
-      >
-        אולי אחר כך
-      </button>
-      <button
-        type="button"
-        onclick={undo}
-        disabled={history.length === 0}
-        class="min-h-[44px] rounded-full bg-white/5 px-5 py-2 font-semibold text-white/70 transition hover:bg-white/10 disabled:opacity-30"
-      >
-        חזור אחורה
-      </button>
-      <span class="text-xs text-white/40">או החלק ימינה →</span>
+    <footer class="mt-4 flex flex-col items-center gap-2 text-sm">
+      <div class="flex items-center justify-center gap-3">
+        <button
+          type="button"
+          onclick={skip}
+          class="min-h-[44px] rounded-full bg-white/10 px-5 py-2 font-semibold text-cream transition hover:bg-white/15"
+        >
+          אולי אחר כך
+        </button>
+        <button
+          type="button"
+          onclick={undo}
+          disabled={history.length === 0}
+          class="min-h-[44px] rounded-full bg-white/5 px-5 py-2 font-semibold text-white/70 transition hover:bg-white/10 disabled:opacity-30"
+        >
+          חזור אחורה
+        </button>
+      </div>
+      <div class="flex w-full justify-between px-4 text-xs text-white/40">
+        
+        <span>→ חזור</span>
+        <span>← דלג</span>
+      </div>
     </footer>
   {/if}
 </main>
