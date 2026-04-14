@@ -173,7 +173,7 @@
   <title>דירוג אוכל — דרג</title>
 </svelte:head>
 
-<main class="flex min-h-[calc(100dvh-120px)] flex-col px-4 pt-5">
+<main class="flex h-[calc(100dvh-120px)] max-h-[calc(100dvh-120px)] flex-col px-4 pt-4">
   <header class="mb-4 flex items-center justify-center">
     <span class="font-mono text-xs text-white/50">{progress.rated} / {progress.total}</span>
   </header>
@@ -188,9 +188,9 @@
     <div class="skeleton flex-1 rounded-3xl"></div>
   {:else}
     {#key key}
-      <section class="flex flex-1 min-h-0 flex-col items-center justify-center gap-4" in:fade={{ duration: 220 }}>
+      <section class="flex flex-1 min-h-0 flex-col gap-3" in:fade={{ duration: 220 }}>
         <div
-          class="relative aspect-[4/5] max-h-[min(60vh,520px)] w-full select-none overflow-hidden rounded-3xl shadow-2xl shadow-black/40"
+          class="relative min-h-0 flex-1 w-full select-none overflow-hidden rounded-3xl shadow-2xl shadow-black/40"
           style="transform: translate3d({dragX}px, 0, 0); transition: {snapping ? 'transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1)' : 'none'}; will-change: transform; touch-action: pan-y; -webkit-user-select: none; -webkit-user-drag: none;"
           in:fly={{ y: 20, duration: 260 }}
           onpointerdown={onCardPointerDown}
