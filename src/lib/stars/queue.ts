@@ -11,15 +11,21 @@ export function getQueue(catalog: LoadedCatalog, myRatings: MyRating[]): Dish[] 
   return catalog
     .allDishes()
     .filter((d) => !rated.has(d.id))
-    .sort((a, b) => {
-      const aDemoted = DEPRIORITIZED_RESTAURANT_IDS.has(a.restaurantId);
-      const bDemoted = DEPRIORITIZED_RESTAURANT_IDS.has(b.restaurantId);
-      if (aDemoted !== bDemoted) return aDemoted ? 1 : -1;
-      const pa = a.popularity ?? 0;
-      const pb = b.popularity ?? 0;
-      if (pa !== pb) return pb - pa;
-      return a.id.localeCompare(b.id);
-    });
+    .sort(compareDishes);
+}
+
+export function getOrderedAll(catalog: LoadedCatalog): Dish[] {
+  return catalog.allDishes().slice().sort(compareDishes);
+}
+
+function compareDishes(a: Dish, b: Dish): number {
+  const aDemoted = DEPRIORITIZED_RESTAURANT_IDS.has(a.restaurantId);
+  const bDemoted = DEPRIORITIZED_RESTAURANT_IDS.has(b.restaurantId);
+  if (aDemoted !== bDemoted) return aDemoted ? 1 : -1;
+  const pa = a.popularity ?? 0;
+  const pb = b.popularity ?? 0;
+  if (pa !== pb) return pb - pa;
+  return a.id.localeCompare(b.id);
 }
 
 export function getNext(
