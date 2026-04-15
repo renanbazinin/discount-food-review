@@ -1,12 +1,11 @@
 #!/usr/bin/env tsx
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
-import { resolve, extname } from 'node:path';
+import { resolve } from 'node:path';
 import {
   isSkippedCategory,
   isGenericCategory,
   isSkippedDish,
-  containsTelbank,
-  cleanTelbankName
+  containsTelbank
 } from './classifier.ts';
 
 const ROOT = resolve(import.meta.dirname, '..');
@@ -109,12 +108,18 @@ interface CategoryReport {
   kept: number;
 }
 
-async function processRestaurant(cfg: ConfigEntry): Promise<OutRestaurant | null> {
+async function processRestaurant(
+  cfg: ConfigEntry,
+  existingIds: Set<string> | null = null,
+  existingNames: Set<string> | null = null
+): Promise<OutRestaurant | null> {
   const menu = await fetchMenu(cfg.id);
   if (!menu || !menu.Success) return null;
   const dishes: OutDish[] = [];
   const seen = new Set<number>();
   const report: CategoryReport[] = [];
+  const appendMode = existingIds !== null;
+  let skippedExisting = 0;
 
   for (const cat of menu.Data.categoriesList) {
     const dishList = cat.dishList ?? [];
@@ -127,13 +132,27 @@ async function processRestaurant(cfg: ConfigEntry): Promise<OutRestaurant | null
     for (const dish of dishList) {
       if (seen.has(dish.dishId)) continue;
       if (generic && isSkippedDish(dish.dishName)) continue;
+      // Skip any dish still carrying a טלבנק marker — phone-only variants are
+      // not main courses we want in the catalog.
+      if (containsTelbank(dish.dishName)) continue;
+      if (appendMode && existingIds!.has(String(dish.dishId))) {
+        seen.add(dish.dishId);
+        skippedExisting += 1;
+        continue;
+      }
       seen.add(dish.dishId);
       const img = dish.dishImageUrl ? await downloadImage(dish.dishImageUrl, dish.dishId) : null;
       const rootId = String(dish.dishId);
-      const base: OutDish = {
+      const dishName = dish.dishName.trim();
+      if (appendMode && existingNames && existingNames.has(dishName.toLowerCase())) {
+        console.warn(
+          `  ! name collision: restaurant ${cfg.id} already has a dish named "${dishName}" — appending anyway (different dishId ${dish.dishId})`
+        );
+      }
+      dishes.push({
         id: rootId,
         rootId,
-        name: dish.dishName.trim(),
+        name: dishName,
         description: (dish.dishDescription ?? '').trim(),
         price: dish.dishPrice,
         image: img,
@@ -142,12 +161,7 @@ async function processRestaurant(cfg: ConfigEntry): Promise<OutRestaurant | null
         popularity: dish.dishPopularityScore ?? 0,
         isPopular: !!dish.isPopularDish,
         orderMethod: 'regular'
-      };
-      // Drop any lingering telbank marker from the dish name.
-      const cleanName = containsTelbank(dish.dishName)
-        ? cleanTelbankName(dish.dishName)
-        : dish.dishName.trim();
-      dishes.push({ ...base, name: cleanName });
+      });
       kept += 1;
     }
     report.push({
@@ -158,10 +172,10 @@ async function processRestaurant(cfg: ConfigEntry): Promise<OutRestaurant | null
     });
   }
 
-  // Within a restaurant, dedupe by normalized name: after stripping the טלבנק
-  // marker we end up with near-duplicate names that came from parallel
-  // categories (e.g. both Take-Away and phone-only variants of the same pizza).
-  // Keep the first occurrence (category iteration order).
+  // Within this batch only, dedupe newly-fetched dishes by normalized name so
+  // parallel categories (e.g. Take-Away and regular) do not produce duplicates.
+  // In append mode this runs against the freshly-fetched batch only; we do not
+  // dedupe against historical entries (id-based identity wins — see design.md).
   const seenNames = new Set<string>();
   const deduped: OutDish[] = [];
   for (const d of dishes) {
@@ -177,6 +191,9 @@ async function processRestaurant(cfg: ConfigEntry): Promise<OutRestaurant | null
   for (const r of report) {
     console.log(`  ${r.tag.padEnd(14)}  ${r.kept}/${r.total}  ${r.name}`);
   }
+  if (appendMode) {
+    console.log(`  append         +${dishes.length} new  (${skippedExisting} existing kept)`);
+  }
   return { id: cfg.id, name: cfg.name, dishes };
 }
 
@@ -185,19 +202,79 @@ async function main() {
     console.error(`Missing ${CONFIG_PATH}. Create it with [{id, name}, ...] entries.`);
     process.exit(1);
   }
+  const appendMode = process.argv.includes('--append');
   const config = JSON.parse(readFileSync(CONFIG_PATH, 'utf-8')) as ConfigEntry[];
-  const restaurants: OutRestaurant[] = [];
-  for (const cfg of config) {
-    const r = await processRestaurant(cfg);
-    if (r) restaurants.push(r);
+
+  console.log(`mode: ${appendMode ? 'append' : 'full-rebuild'}`);
+
+  let existingByRestId: Map<number, OutRestaurant> = new Map();
+  if (appendMode) {
+    if (!existsSync(OUT_PATH)) {
+      console.error(
+        `append mode requires an existing ${OUT_PATH} to merge into, but none was found.`
+      );
+      process.exit(1);
+    }
+    let parsed: { restaurants: OutRestaurant[] };
+    try {
+      parsed = JSON.parse(readFileSync(OUT_PATH, 'utf-8')) as { restaurants: OutRestaurant[] };
+    } catch (e) {
+      console.error(`append mode: failed to parse ${OUT_PATH}:`, e);
+      process.exit(1);
+    }
+    for (const r of parsed.restaurants) existingByRestId.set(r.id, r);
   }
+
+  const restaurants: OutRestaurant[] = [];
+  let totalNewAppended = 0;
+  for (const cfg of config) {
+    if (appendMode) {
+      const existing = existingByRestId.get(cfg.id);
+      const existingIds = new Set<string>((existing?.dishes ?? []).map((d) => d.id));
+      const existingNames = new Set<string>(
+        (existing?.dishes ?? []).map((d) => d.name.trim().toLowerCase())
+      );
+      const r = await processRestaurant(cfg, existingIds, existingNames);
+      if (!r) {
+        // Fetch failed — keep the existing record untouched if we have one.
+        if (existing) restaurants.push(existing);
+        continue;
+      }
+      const merged: OutRestaurant = {
+        id: cfg.id,
+        name: cfg.name,
+        dishes: [...(existing?.dishes ?? []), ...r.dishes]
+      };
+      totalNewAppended += r.dishes.length;
+      restaurants.push(merged);
+    } else {
+      const r = await processRestaurant(cfg);
+      if (r) restaurants.push(r);
+    }
+  }
+
+  // Preserve any restaurants present in the existing file but not in the
+  // current config (defensive — append mode must never drop records).
+  if (appendMode) {
+    const configIds = new Set(config.map((c) => c.id));
+    for (const [id, rest] of existingByRestId.entries()) {
+      if (!configIds.has(id)) restaurants.push(rest);
+    }
+  }
+
   writeFileSync(OUT_PATH, JSON.stringify({ restaurants }, null, 2), 'utf-8');
   const totalDishes = restaurants.reduce((n, r) => n + r.dishes.length, 0);
   const totalImages = restaurants.reduce(
     (n, r) => n + r.dishes.filter((d) => d.image).length,
     0
   );
-  console.log(`\n==> ${totalDishes} main-course dishes, ${totalImages} images`);
+  if (appendMode) {
+    console.log(
+      `\n==> append mode: +${totalNewAppended} new dishes across ${restaurants.length} restaurants (${totalDishes} total now in catalog)`
+    );
+  } else {
+    console.log(`\n==> ${totalDishes} main-course dishes, ${totalImages} images`);
+  }
   console.log(`==> wrote ${OUT_PATH}`);
 }
 

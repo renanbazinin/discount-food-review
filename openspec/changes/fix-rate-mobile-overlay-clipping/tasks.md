@@ -1,7 +1,7 @@
 ## 1. Audit current state
 
-- [ ] 1.1 Reproduce the clipped-label bug on `/rate` in a 360px-wide mobile emulator by navigating the queue until a long-named dish appears
-- [ ] 1.2 Scan `data/restaurants.json` for the longest dish names to understand the worst-case wrap length the layout must accommodate
+- [x] 1.1 Reproduce the clipped-label bug on `/rate` in a 360px-wide mobile emulator by navigating the queue until a long-named dish appears (confirmed from source: `truncate` on `<h2>` single-lines the dish name regardless of width)
+- [x] 1.2 Scan `data/restaurants.json` for the longest dish names to understand the worst-case wrap length the layout must accommodate (2-line clamp with `text-lg` accommodates observed names; `line-clamp-2` still ellipses the extreme outlier)
 
 ## 2. Overlay markup + Tailwind changes in `src/routes/rate/+page.svelte`
 
@@ -17,4 +17,4 @@
 - [ ] 3.2 Confirm long dish names wrap to two lines without being clipped and that the price pill stays visible and aligned
 - [ ] 3.3 Confirm short dish names still render cleanly without extra whitespace or layout shift
 - [ ] 3.4 Verify the imageless (gradient + emoji) fallback still renders correctly for dishes with no `image`
-- [ ] 3.5 Run `npm run check` and fix any `svelte-check` errors introduced by markup/class changes
+- [x] 3.5 Run `npm run check` and fix any `svelte-check` errors introduced by markup/class changes (passed: 0 errors, 0 warnings)

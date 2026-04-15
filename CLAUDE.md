@@ -12,6 +12,7 @@ Hebrew/RTL food ranking app for 10bis main courses. Each browser rates dishes 1�
 - `npm run build` / `npm run preview` — production build / preview
 - `npm run check` — `svelte-kit sync && svelte-check` (the only typecheck/lint step; there is no test suite)
 - `npm run scrape` — runs `scripts/scrape.ts` via tsx; regenerates `data/restaurants.json` from 10bis menu endpoints and downloads dish images to `data/images/`. Edit `data/restaurants.config.json` to add restaurant ids before scraping.
+- `npm run scrape:append` — same script with `--append`; non-destructive merge that preserves every existing dish (by `dishId`) and only appends newly-listed main courses. Use this instead of `scrape` when you want to pick up new 10bis items without invalidating MongoDB ratings that reference old `dishId`s. Categories `טלבנק` and `GTG` are skipped entirely; any dish name still containing `טלבנק` is skipped too.
 
 Requires `MONGODB_URI` in `.env` (copy from `.env.example`).
 

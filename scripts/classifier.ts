@@ -15,10 +15,12 @@ export const CATEGORY_SKIP_PATTERNS = [
   'מרק',
   'ילדים',
   'פתיחים',
-  'ראשונות'
+  'ראשונות',
+  'טלבנק',
+  'GTG'
 ];
 
-export const GENERIC_CATEGORY_PATTERNS = ['תפריט', 'Take Away', 'טלבנק', 'Grab'];
+export const GENERIC_CATEGORY_PATTERNS = ['תפריט', 'Take Away', 'Grab'];
 
 export const DISH_SKIP_PATTERNS = [
   'בקבוק',
@@ -49,7 +51,8 @@ export const DISH_SKIP_PATTERNS = [
 ];
 
 export function isSkippedCategory(name: string): boolean {
-  return CATEGORY_SKIP_PATTERNS.some((p) => name.includes(p));
+  const lower = name.toLowerCase();
+  return CATEGORY_SKIP_PATTERNS.some((p) => lower.includes(p.toLowerCase()));
 }
 
 export function isGenericCategory(name: string): boolean {

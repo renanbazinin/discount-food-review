@@ -29,6 +29,45 @@
           "popularity": 881,
           "isPopular": false,
           "orderMethod": "regular"
+        },
+        {
+          "id": "23331637",
+          "rootId": "23331637",
+          "name": "סלט M בהרכבה G&G",
+          "description": "סלט בגודל רגיל בהרכבה אישית - יש לבחור את מרכיבי הסלט, 2 רטבים ללא עלות, סמנו אם תרצו לחם.\nניתן לשדרג את המנה עם רטבים נוספים ושתייה קלה",
+          "price": 30,
+          "image": null,
+          "imageUrl": "",
+          "category": "לקחת Grab&Go🏃🏼",
+          "popularity": 1472,
+          "isPopular": false,
+          "orderMethod": "regular"
+        },
+        {
+          "id": "23331636",
+          "rootId": "23331636",
+          "name": "סלט L בהרכבה G&G",
+          "description": "סלט בגודל גדול בהרכבה אישית - יש לבחור את מרכיבי הסלט, 2 רטבים ללא עלות, סמנו אם תרצו לחם.\nניתן לשדרג את המנה עם רטבים נוספים ושתייה קלה",
+          "price": 33,
+          "image": null,
+          "imageUrl": "",
+          "category": "לקחת Grab&Go🏃🏼",
+          "popularity": 1824,
+          "isPopular": false,
+          "orderMethod": "regular"
+        },
+        {
+          "id": "23337293",
+          "rootId": "23337293",
+          "name": "סלט קטן בקופסא G&G",
+          "description": "חסה, ארוגולה, מלפפון, עגבניה, גמבה.\n\nמנה מובנית לא ניתנת לשינויים",
+          "price": 25,
+          "image": null,
+          "imageUrl": "",
+          "category": "לקחת Grab&Go🏃🏼",
+          "popularity": 122,
+          "isPopular": false,
+          "orderMethod": "regular"
         }
       ]
     },
@@ -254,6 +293,45 @@
           "imageUrl": "",
           "category": "תפריט טלבנק בלבד !",
           "popularity": 17,
+          "isPopular": false,
+          "orderMethod": "regular"
+        },
+        {
+          "id": "23638308",
+          "rootId": "23638308",
+          "name": "פיצה מרגריטה G&G",
+          "description": "פיצה מחמצת עם רוטב עגבניות ומוצרלה בעיטור שום קונפי, שרי צלוי ובזיליקום טרי",
+          "price": 25,
+          "image": "images/23638308.jpg",
+          "imageUrl": "https://cdn.paypo.com/images/isdiscountbank/1007/15000_0.jpg",
+          "category": "תפריט Take Away",
+          "popularity": 20,
+          "isPopular": false,
+          "orderMethod": "regular"
+        },
+        {
+          "id": "23638307",
+          "rootId": "23638307",
+          "name": "ג'מבלאיה 🌱 ניו אורלינס  G&G",
+          "description": "אורז בסגנון קריאולי: גרגירי חומוס, עגבניות, פלפלים, סלרי, בצל, במיה ופטריות צלויות\n|| ללא גלוטן, 🌱 טבעוני",
+          "price": 25,
+          "image": "images/23638307.jpg",
+          "imageUrl": "https://cdn.paypo.com/images/isdiscountbank/1007/15001_1.jpg",
+          "category": "תפריט Take Away",
+          "popularity": 12,
+          "isPopular": false,
+          "orderMethod": "regular"
+        },
+        {
+          "id": "23638306",
+          "rootId": "23638306",
+          "name": "אמנון אפוי בתנור G&G",
+          "description": "שני פילה אמנון עם אנטיפסטי ואורז",
+          "price": 25,
+          "image": "images/23638306.jpg",
+          "imageUrl": "https://cdn.paypo.com/images/isdiscountbank/1007/15002_0.jpg",
+          "category": "תפריט Take Away",
+          "popularity": 11,
           "isPopular": false,
           "orderMethod": "regular"
         }
@@ -515,6 +593,32 @@
           "popularity": 7,
           "isPopular": false,
           "orderMethod": "regular"
+        },
+        {
+          "id": "23648593",
+          "rootId": "23648593",
+          "name": "חזה עוף ואורז G&G",
+          "description": "חזה עוף מתובל בתוספת אורז וסלט אישי.",
+          "price": 25,
+          "image": "images/23648593.jpg",
+          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1006/10024_0.jpg",
+          "category": "תפריט Take Away",
+          "popularity": 142,
+          "isPopular": true,
+          "orderMethod": "regular"
+        },
+        {
+          "id": "23648597",
+          "rootId": "23648597",
+          "name": "חזה עוף וירקנית G&G",
+          "description": "חזה עוף בתיבול בתוספת ירקנית וסלט אישי.",
+          "price": 25,
+          "image": "images/23648597.jpg",
+          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1006/10025_0.jpg",
+          "category": "תפריט Take Away",
+          "popularity": 73,
+          "isPopular": false,
+          "orderMethod": "regular"
         }
       ]
     },
@@ -599,6 +703,32 @@
           "popularity": 656,
           "isPopular": false,
           "orderMethod": "regular"
+        },
+        {
+          "id": "9377541",
+          "rootId": "9377541",
+          "name": "אנטריקוט בלחמניה ללא גלוטן",
+          "description": "המבורגר אנטריקוט,בצל,עגבניה,חסה,מלפפון כבוש,רטבים,סלט קולסלאו,צ'יפס,לחמניה ללא גלוטן",
+          "price": 40,
+          "image": "images/9377541.jpg",
+          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1004/10006_0.jpg",
+          "category": "ארוחות ",
+          "popularity": 34,
+          "isPopular": false,
+          "orderMethod": "regular"
+        },
+        {
+          "id": "9377542",
+          "rootId": "9377542",
+          "name": "ביו מיט בלחמניה ללא גלוטן 🌿🌱",
+          "description": "המבורגר ביו מיט, בצל, עגבניה, חסה, מלפפון כבוש רטבים, סלט קולסלאו, צ'יפס, לחם ללא גלוטן",
+          "price": 40,
+          "image": "images/9377542.jpg",
+          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1004/10007_0.jpg",
+          "category": "ארוחות ",
+          "popularity": 13,
+          "isPopular": false,
+          "orderMethod": "regular"
         }
       ]
     },
@@ -681,6 +811,32 @@
           "imageUrl": "https://cdn.paypo.com/images/discountmeat/1001/10096_0.jpg",
           "category": "תבשילים",
           "popularity": 0,
+          "isPopular": false,
+          "orderMethod": "regular"
+        },
+        {
+          "id": "23155526",
+          "rootId": "23155526",
+          "name": "מעורב ירושלמי",
+          "description": "מעורב ירושלמי בתוספת פחמימה וירקנית.\nמוגש עם סלט אישי.",
+          "price": 35,
+          "image": "images/23155526.jpg",
+          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1001/10052_0.jpg",
+          "category": "תבשילים",
+          "popularity": 564,
+          "isPopular": false,
+          "orderMethod": "regular"
+        },
+        {
+          "id": "23456622",
+          "rootId": "23456622",
+          "name": "ביף בורגיניון",
+          "description": "תבשיל ביף בורגיניון עם פחמימה, ירקנית וסלט אישי.",
+          "price": 40,
+          "image": "images/23456622.jpg",
+          "imageUrl": "https://cdn.paypo.com/images/discountmeat/1001/10064_0.jpg",
+          "category": "תבשילים",
+          "popularity": 334,
           "isPopular": false,
           "orderMethod": "regular"
         }
