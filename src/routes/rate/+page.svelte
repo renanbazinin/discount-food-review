@@ -209,22 +209,22 @@
           {:else}
             {@const g = dishGradient(current)}
             <div
-              class="flex h-full w-full flex-col items-center justify-center gap-4 p-8"
+              class="flex h-full w-full flex-col items-center justify-center gap-4 p-6 sm:p-8"
               style="background: linear-gradient(135deg, {g.from}, {g.to});"
             >
-              <span class="text-7xl drop-shadow-lg" aria-hidden="true">{dishEmoji(current)}</span>
-              <span class="text-center text-3xl font-extrabold leading-tight text-white drop-shadow-lg">
+              <span class="text-6xl drop-shadow-lg sm:text-7xl" aria-hidden="true">{dishEmoji(current)}</span>
+              <span class="line-clamp-3 max-w-full text-center text-2xl font-extrabold leading-tight text-white drop-shadow-lg sm:text-3xl">
                 {current.name}
               </span>
             </div>
           {/if}
-          <div class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent p-4 pt-20">
-            <div class="flex items-end justify-between gap-3">
+          <div class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent p-3 pt-16 sm:p-4 sm:pt-20">
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-3">
               <div class="min-w-0 flex-1">
-                <h2 class="truncate text-xl font-extrabold leading-tight text-white">{current.name}</h2>
-                <p class="truncate text-sm text-white/70">{current.restaurantName}</p>
+                <h2 class="line-clamp-2 text-lg font-extrabold leading-tight text-white sm:text-xl">{current.name}</h2>
+                <p class="truncate text-xs text-white/70 sm:text-sm">{current.restaurantName}</p>
               </div>
-              <div class="shrink-0 rounded-full bg-white/15 px-3 py-1 text-sm font-semibold text-white backdrop-blur-sm">
+              <div class="self-end rounded-full bg-white/15 px-3 py-1 text-sm font-semibold text-white backdrop-blur-sm sm:self-auto sm:shrink-0">
                 ₪{current.price}
               </div>
             </div>
